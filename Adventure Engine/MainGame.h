@@ -21,6 +21,7 @@ private:
 	void processInput();
 
 	void gameLoop();
+	void drawGame();
 
 	SDL_Window* m_window;
 	char* m_screenTitle;
