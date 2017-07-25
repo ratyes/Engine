@@ -2,9 +2,11 @@
 
 in vec2 vertexPosition;
 in vec4 vertexColor;
+in vec2 vertextUV;
 
 out vec2 fragmentPosition;
 out vec4 fragmentColor;
+out vec2 fragmentUV;
 
 void main()
 {
@@ -14,4 +16,5 @@ void main()
 
 	fragmentColor=vertexColor;
 	fragmentPosition=vertexPosition;
+	fragmentUV = vec2 ( vertextUV.x, 1.0 - vertextUV.y);
 }

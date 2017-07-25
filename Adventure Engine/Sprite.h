@@ -1,5 +1,10 @@
 #pragma once
 #include <GL/glew.h>
+#include "GLTexture.h"
+
+#include <string>
+
+using namespace std;
 
 class Sprite
 {
@@ -7,7 +12,7 @@ public:
 	Sprite();
 	~Sprite();
 
-	void init(float x, float y, float width, float height);
+	void init(float x, float y, float width, float height,string texturePath);
 	void draw();
 
 private:
@@ -17,5 +22,6 @@ private:
 	float m_height;
 	GLuint m_vboID;
 
+	GLTexture m_texture;
 };
 

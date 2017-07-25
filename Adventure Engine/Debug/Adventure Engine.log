@@ -1,0 +1,4 @@
+﻿  MainGame.cpp
+c:\users\dylan\desktop\engine\adventure engine\maingame.cpp(128): warning C4018: '<': signed/unsigned mismatch
+  Adventure Engine.vcxproj -> C:\Users\dylan\Desktop\Engine\Adventure Engine\Debug\Adventure Engine.exe
+  Adventure Engine.vcxproj -> C:\Users\dylan\Desktop\Engine\Adventure Engine\Debug\Adventure Engine.pdb (Partial PDB)

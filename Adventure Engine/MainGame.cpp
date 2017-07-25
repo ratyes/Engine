@@ -1,6 +1,5 @@
 #include "MainGame.h"
 #include "Error.h"
-
 #include <iostream>
 
 using namespace std;
@@ -26,7 +25,17 @@ void MainGame::run()
 {
 	initSystems();
 
-	m_sprite.init(-1, -1, 2, 2);
+	m_sprites.push_back(new Sprite());
+	m_sprites.back()->init(-1, -1, 1, 1, "textures/PNG/CharacterLeft_Walk1.png");
+
+	m_sprites.push_back(new Sprite());
+	m_sprites.back()->init(0.0f, -1, 1, 1, "textures/PNG/CharacterLeft_Walk1.png");
+
+
+	m_sprites.push_back(new Sprite());
+	m_sprites.back()->init(-1.0f, 0.0f, 1, 1, "textures/PNG/CharacterLeft_Walk1.png");
+	
+
 
 	gameLoop();
 }
@@ -68,6 +77,7 @@ void MainGame::initShaders()
 	m_colorProgram.compileShaders("shaders/colorShading.vert", "shaders/colorShading.frag");
 	m_colorProgram.addAttribute("vertexPosition");
 	m_colorProgram.addAttribute("vertexColor");
+	m_colorProgram.addAttribute("vertextUV");
 	m_colorProgram.linkShaders();
 }
 
@@ -82,8 +92,8 @@ void MainGame::processInput()
 			m_gameState = GameState::EXIT;
 			break;
 		case SDL_MOUSEMOTION:
-			std::cout << evnt.motion.x << std::endl;;
-			std::cout << evnt.motion.y << std::endl;;
+			//std::cout << evnt.motion.x << std::endl;;
+			//std::cout << evnt.motion.y << std::endl;;
 			break;
 		}
 	}
@@ -107,13 +117,20 @@ void MainGame::drawGame()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_colorProgram.use();
+	glActiveTexture(GL_TEXTURE0);
+	GLint texturelocation = m_colorProgram.getUniformLocation("mySampler");
+	glUniform1i(texturelocation,0);
 
-	GLuint timeLocation = m_colorProgram.getUniformLocation("time");
-
+	GLint timeLocation = m_colorProgram.getUniformLocation("time");
 	glUniform1f(timeLocation, m_time);
 
-	m_sprite.draw();
+	for (int i = 0; i < m_sprites.size(); i++)
+	{
+		m_sprites[i]->draw();
+	}
 
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 	m_colorProgram.unUse();
 
 	SDL_GL_SwapWindow(m_window);

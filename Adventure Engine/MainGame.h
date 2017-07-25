@@ -3,8 +3,11 @@
 #include <SDL/SDL.h>
 #include <GL/glew.h>
 
+#include <vector>
+
 #include "GLSLProgram.h"
 #include "Sprite.h"
+#include "GLTexture.h"
 
 enum class GameState {PLAY,EXIT};
 
@@ -33,7 +36,7 @@ private:
 	int m_screenHeight;
 	GameState m_gameState;
 
-	Sprite m_sprite;
+	vector<Sprite*> m_sprites;
 	GLSLProgram m_colorProgram;
 
 	float m_time;
