@@ -26,6 +26,7 @@ private:
 	void initSystems();
 	void initShaders();
 	void processInput();
+	void calculateFPS();
 
 	void gameLoop();
 	void drawGame();
@@ -38,6 +39,10 @@ private:
 
 	vector<Sprite*> m_sprites;
 	GLSLProgram m_colorProgram;
+
+	float m_fps;
+	float m_maxFps;
+	float m_frameTime;
 
 	float m_time;
 

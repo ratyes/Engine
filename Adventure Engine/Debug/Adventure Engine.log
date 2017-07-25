@@ -1,4 +1,8 @@
 ﻿  MainGame.cpp
-c:\users\dylan\desktop\engine\adventure engine\maingame.cpp(128): warning C4018: '<': signed/unsigned mismatch
+c:\users\dylan\desktop\engine\adventure engine\maingame.cpp(116): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
+c:\users\dylan\desktop\engine\adventure engine\maingame.cpp(119): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+c:\users\dylan\desktop\engine\adventure engine\maingame.cpp(162): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
+c:\users\dylan\desktop\engine\adventure engine\maingame.cpp(185): warning C4244: 'argument': conversion from 'float' to 'Uint32', possible loss of data
+c:\users\dylan\desktop\engine\adventure engine\maingame.cpp(203): warning C4018: '<': signed/unsigned mismatch
   Adventure Engine.vcxproj -> C:\Users\dylan\Desktop\Engine\Adventure Engine\Debug\Adventure Engine.exe
   Adventure Engine.vcxproj -> C:\Users\dylan\Desktop\Engine\Adventure Engine\Debug\Adventure Engine.pdb (Partial PDB)

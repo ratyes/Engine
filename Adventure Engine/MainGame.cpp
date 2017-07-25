@@ -14,6 +14,7 @@ MainGame::MainGame()
 	m_screenHeight = 768;
 	m_gameState = GameState::PLAY;
 	m_time = 0;
+	m_maxFps = 120.0f;
 }
 
 
@@ -43,8 +44,11 @@ void MainGame::initSystems()
 {
 	//initialize SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
-	m_window = SDL_CreateWindow(m_screenTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_screenWidth, m_screenHeight, SDL_WINDOW_OPENGL);
 
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+	//open sdl window
+	m_window = SDL_CreateWindow(m_screenTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_screenWidth, m_screenHeight, SDL_WINDOW_OPENGL);
 	if (m_window == nullptr)
 	{
 		fatalError("SDL window could not be created!");
@@ -64,9 +68,13 @@ void MainGame::initSystems()
 		fatalError("could not initailize glew!");
 	}
 
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	//check open gl version
+	printf("*** OpenGl version:%s ***\n",glGetString(GL_VERSION));
 
 	glClearColor(0.0f,0.0f,1.0f,1.0f);
+
+	//set VSYNC 1 on 0 off
+	SDL_GL_SetSwapInterval(0);
 
 	initShaders();
 
@@ -99,15 +107,83 @@ void MainGame::processInput()
 	}
 }
 
+void MainGame::calculateFPS()
+{
+	static const int NUM_SAMPLES = 10;
+	static float frameTimes[NUM_SAMPLES];
+	static int currentFrame = 0;
+
+	static float prevTicks = SDL_GetTicks();
+	
+	float currentTicks;
+	currentTicks = SDL_GetTicks();
+
+	m_frameTime = currentTicks - prevTicks;
+	frameTimes[currentFrame % NUM_SAMPLES] = m_frameTime;
+
+	prevTicks = currentTicks;
+
+	int count;
+	currentFrame++;
+	if (currentFrame < NUM_SAMPLES)
+	{
+		count = currentFrame;
+	}
+	else
+	{
+		count = NUM_SAMPLES;
+	}
+
+	float frameTimeAverage = 0;
+	for (int i = 0; i < count; i++)
+	{
+		frameTimeAverage += frameTimes[i];
+	}
+	frameTimeAverage /= count;
+
+	if (frameTimeAverage > 0)
+	{
+		m_fps = 1000.0f / frameTimeAverage;
+	}
+	else
+	{
+		m_fps = 60.0f;
+	}
+
+	
+
+}
+
 void MainGame::gameLoop()
 {
 	while (m_gameState != GameState::EXIT)
 	{
+		//used to frame time measuring
+		float startTicks = SDL_GetTicks();
+
 		processInput();
 
 		m_time += 0.01f;
 
 		drawGame();
+
+		calculateFPS();
+
+		//print only 10 frames
+		static int frameCounter = 0;
+		frameCounter++;
+		if (frameCounter > 10)
+		{
+			cout << m_fps << endl;
+			frameCounter = 0;
+		}
+
+		//limit the max fps
+		float frameTicks = SDL_GetTicks() - startTicks;
+		if ((1000.0f / m_maxFps) > frameTicks)
+		{
+			SDL_Delay(1000.0f / m_maxFps - frameTicks);
+		}
 	}
 }
 
