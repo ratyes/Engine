@@ -1,5 +1,7 @@
 #include "Error.h"
 
+#include <cstdlib>
+
 #include <iostream>
 #include <SDL/SDL.h>
 
@@ -10,4 +12,5 @@ void fatalError(string errorString)
 	int tmp;
 	cin >> tmp;
 	SDL_Quit();
+	exit(404);
 }

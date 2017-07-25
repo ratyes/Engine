@@ -30,6 +30,7 @@
     <ClInclude Include="GLSLProgram.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
