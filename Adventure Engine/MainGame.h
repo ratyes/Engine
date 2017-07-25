@@ -3,6 +3,8 @@
 #include <SDL/SDL.h>
 #include <GL/glew.h>
 
+#include "Sprite.h"
+
 enum class GameState {PLAY,EXIT};
 
 class MainGame
@@ -28,6 +30,8 @@ private:
 	int m_screenWidth;
 	int m_screenHeight;
 	GameState m_gameState;
+
+	Sprite m_sprite;
 
 };
 
