@@ -36,5 +36,7 @@ private:
 	Sprite m_sprite;
 	GLSLProgram m_colorProgram;
 
+	float m_time;
+
 };
 

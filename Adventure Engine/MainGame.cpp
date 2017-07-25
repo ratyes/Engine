@@ -14,6 +14,7 @@ MainGame::MainGame()
 	m_screenWidth = 1024;
 	m_screenHeight = 768;
 	m_gameState = GameState::PLAY;
+	m_time = 0;
 }
 
 
@@ -25,7 +26,7 @@ void MainGame::run()
 {
 	initSystems();
 
-	m_sprite.init(-1, -1, 1, 1);
+	m_sprite.init(-1, -1, 2, 2);
 
 	gameLoop();
 }
@@ -66,6 +67,7 @@ void MainGame::initShaders()
 {
 	m_colorProgram.compileShaders("shaders/colorShading.vert", "shaders/colorShading.frag");
 	m_colorProgram.addAttribute("vertexPosition");
+	m_colorProgram.addAttribute("vertexColor");
 	m_colorProgram.linkShaders();
 }
 
@@ -92,6 +94,9 @@ void MainGame::gameLoop()
 	while (m_gameState != GameState::EXIT)
 	{
 		processInput();
+
+		m_time += 0.01f;
+
 		drawGame();
 	}
 }
@@ -102,6 +107,10 @@ void MainGame::drawGame()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_colorProgram.use();
+
+	GLuint timeLocation = m_colorProgram.getUniformLocation("time");
+
+	glUniform1f(timeLocation, m_time);
 
 	m_sprite.draw();
 
